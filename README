@@ -1,0 +1,6 @@
+### mhttp
+
+描述:
+====
+    *) 一个简单的web服务
+    *) golang http server的简单封装
