@@ -42,6 +42,7 @@ func (e *HttpEngine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 /*  ======== Context=======  */
+// 上下文类
 type Context struct {
 	Writer     http.ResponseWriter
 	Request    *http.Request
@@ -63,29 +64,35 @@ func newContext(w http.ResponseWriter, r *http.Request) *Context {
 	}
 }
 
+// post请求表单参数
 func (ctx *Context) PostForm(key string) string {
 	return ctx.Request.FormValue(key)
 }
 
+// query请求参数
 func (ctx *Context) Query(key string) string {
 	return ctx.Request.URL.Query().Get(key)
 }
 
+// 状态码设置
 func (ctx *Context) Status(code int) {
 	ctx.StatusCode = code
 	ctx.Writer.WriteHeader(code)
 }
 
+// header设置
 func (ctx *Context) SetHeader(key, value string) {
 	ctx.Writer.Header().Set(key, value)
 }
 
+// 响应文本
 func (c *Context) String(code int, format string, values ...interface{}) {
 	c.SetHeader("Content-Type", "text/plain")
 	c.Status(code)
 	c.Writer.Write([]byte(fmt.Sprintf(format, values...)))
 }
 
+// 响应json
 func (c *Context) JSON(code int, obj interface{}) {
 	c.SetHeader("Content-Type", "application/json")
 	c.Status(code)
@@ -95,11 +102,13 @@ func (c *Context) JSON(code int, obj interface{}) {
 	}
 }
 
+// 响应数据
 func (c *Context) Data(code int, data []byte) {
 	c.Status(code)
 	c.Writer.Write(data)
 }
 
+// 响应HTML
 func (c *Context) HTML(code int, html string) {
 	c.SetHeader("Content-Type", "text/html")
 	c.Status(code)
@@ -107,8 +116,10 @@ func (c *Context) HTML(code int, html string) {
 }
 
 /*  ========  Route  =======  */
+// 路由类
 type route struct{ handles map[string]HandleFun }
 
+// 实例化route
 func newRoute() *route {
 	return &route{handles: make(map[string]HandleFun)}
 }
