@@ -16,18 +16,18 @@ func New() *HttpEngine {
 }
 
 // 注册请求方法,路由和处理函数
-func (e *HttpEngine) registerRoute(method string, pattern string, handler HandleFun) {
-	e.route.registerRoute(method, pattern, handler)
+func (e *HttpEngine) registerRoute(method string, pattern string, handleFun HandleFun) {
+	e.route.registerRoute(method, pattern, handleFun)
 }
 
 // GET请求处理函数
-func (e *HttpEngine) Get(pattern string, handler HandleFun) {
-	e.registerRoute("GET", pattern, handler)
+func (e *HttpEngine) Get(pattern string, handleFun HandleFun) {
+	e.registerRoute("GET", pattern, handleFun)
 }
 
 // POST请求处理函数
-func (e *HttpEngine) Post(pattern string, handler HandleFun) {
-	e.registerRoute("POST", pattern, handler)
+func (e *HttpEngine) Post(pattern string, handleFun HandleFun) {
+	e.registerRoute("POST", pattern, handleFun)
 }
 
 // 启动服务
